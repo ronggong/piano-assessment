@@ -12,7 +12,7 @@ from parser.midi_parser import mid_note_parser
 from operator import itemgetter
 
 
-def alignment(y_t, y_s, sr_t, sr_s, score_t, score_s, merge_dlnco=True):
+def alignment(y_t, y_s, sr_t, sr_s, score_t, score_s, merge_dlnco=True, plot=False):
 
     n_fft = 4096
     hopsize = int(n_fft/4)
@@ -121,42 +121,43 @@ def alignment(y_t, y_s, sr_t, sr_s, score_t, score_s, merge_dlnco=True):
     #     for ss in non_aligned_score_s:
     #         list_score_aligned.append([[], ss])
 
-    # # plot the alignment, red aligned notes, black extra or missing notes
-    # f, (ax1, ax2) = plt.subplots(2, 1)
-    # for note_pair in list_score_aligned:
-    #     if len(note_pair[0]) and len(note_pair[1]):
-    #         face_color = 'r'
-    #     elif len(note_pair[0]):
-    #         face_color = 'k'
-    #     else:
-    #         continue
-    #     rect = patches.Rectangle((note_pair[0][0], note_pair[0][1]-0.5), note_pair[0][2], 1.0, linewidth=1,edgecolor=face_color,facecolor=face_color)
-    #     ax1.add_patch(rect)
-        
-    # ax1.set_ylabel('Teacher')
-    # ax1.set_xlim(0, len_y_t)
-    # ax1.set_ylim(0, 88)
+    if plot:
+        # plot the alignment, red aligned notes, black extra or missing notes
+        f, (ax1, ax2) = plt.subplots(2, 1)
+        for note_pair in list_score_aligned:
+            if len(note_pair[0]) and len(note_pair[1]):
+                face_color = 'r'
+            elif len(note_pair[0]):
+                face_color = 'k'
+            else:
+                continue
+            rect = patches.Rectangle((note_pair[0][0], note_pair[0][1]-0.5), note_pair[0][2], 1.0, linewidth=1,edgecolor=face_color,facecolor=face_color)
+            ax1.add_patch(rect)
+            
+        ax1.set_ylabel('Teacher')
+        ax1.set_xlim(0, len_y_t)
+        ax1.set_ylim(0, 88)
 
-    # for note_pair in list_score_aligned:
-    #     if len(note_pair[0]) and len(note_pair[1]):
-    #         face_color = 'r'
-    #         con = ConnectionPatch(xyA=(note_pair[1][0], note_pair[1][1]-0.5), xyB=(note_pair[0][0], note_pair[0][1]-0.5), coordsA="data", coordsB="data",
-    #                     axesA=ax2, axesB=ax1, color="b")
-    #         ax2.add_artist(con)
-    #     elif len(note_pair[1]):
-    #         face_color = 'k'
-    #     else:
-    #         continue        
-    #     rect = patches.Rectangle((note_pair[1][0], note_pair[1][1]-0.5), note_pair[1][2], 1.0, linewidth=1,edgecolor=face_color,facecolor=face_color)
-    #     ax2.add_patch(rect)
+        for note_pair in list_score_aligned:
+            if len(note_pair[0]) and len(note_pair[1]):
+                face_color = 'r'
+                con = ConnectionPatch(xyA=(note_pair[1][0], note_pair[1][1]-0.5), xyB=(note_pair[0][0], note_pair[0][1]-0.5), coordsA="data", coordsB="data",
+                            axesA=ax2, axesB=ax1, color="b")
+                ax2.add_artist(con)
+            elif len(note_pair[1]):
+                face_color = 'k'
+            else:
+                continue        
+            rect = patches.Rectangle((note_pair[1][0], note_pair[1][1]-0.5), note_pair[1][2], 1.0, linewidth=1,edgecolor=face_color,facecolor=face_color)
+            ax2.add_patch(rect)
 
-    # ax2.set_ylabel('Student')
-    # ax2.set_xlim(0, len_y_s)
-    # ax2.set_ylim(0, 88)
-    # ax2.set_xlabel('time (s)')
+        ax2.set_ylabel('Student')
+        ax2.set_xlim(0, len_y_s)
+        ax2.set_ylim(0, 88)
+        ax2.set_xlabel('time (s)')
 
-    # # plt.tight_layout()
-    # plt.show()
+        # plt.tight_layout()
+        plt.show()
 
     return list_score_aligned
 
