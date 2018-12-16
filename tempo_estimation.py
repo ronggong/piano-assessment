@@ -45,6 +45,7 @@ def indices_segment_start_end(list_score_aligned, score_s_segmented):
     last_end_num = 0
     segment_start_end = [] # segment start and end indices
     for note_seq_s in score_s_segmented:
+        # print(note_seq_s)
         num_t_start, num_t_end = 0, 0
         num_s_start = note_seq_s[0][3]
         num_s_end = note_seq_s[-1][3]
@@ -54,25 +55,29 @@ def indices_segment_start_end(list_score_aligned, score_s_segmented):
                     num_t_start = ii
                 if note_t_s[1][3] == num_s_end:
                     num_t_end = ii
-
+        # print(num_t_start)
         # # force the end of the last index of the segment end = the current segment start number - 1
         # force the beginning of the current index of the segment = the index of the last segment end
-        if num_t_start > last_end_num + 1:
+        if num_t_start > last_end_num + 1 and len(segment_start_end):
             num_t_start_orig = num_t_start # this index, list_score_aligned list has note
             # segment_start_end[-1][1] = num_t_start - 1
             num_t_start = last_end_num + 1
+        elif not len(segment_start_end) and num_t_start > 0:
+            num_t_start = 0
+            num_t_start_orig = 0
         else:
             num_t_start_orig = last_end_num + 1
-        last_end_num = num_s_end
-
+        last_end_num = num_t_end
+        # print(num_t_start)
         # print(list_score_aligned[num_t_start_orig], list_score_aligned[num_t_end])
         # print(segment_start_end)
         # TODO implement the minimum note restriction for teacher's segment
+        # print(len(list_score_aligned), num_t_start_orig, last_end_num)
         if len(segment_start_end) and list_score_aligned[num_t_end][1][3] - list_score_aligned[num_t_start_orig][1][3] < 2:
             segment_start_end[-1][1] = num_t_end
         else:
             segment_start_end.append([num_t_start, num_t_end])
-
+        # print(num_t_start)
     if segment_start_end[-1][1] < len(list_score_aligned)-1:
         segment_start_end[-1][1] = len(list_score_aligned)-1
     return segment_start_end
@@ -90,10 +95,10 @@ def streching_student_notes(list_score_aligned, segment_start_end):
     list_score_aligned_copy = copy.deepcopy(list_score_aligned)
     list_tempo_t = []
     list_tempo_s = []
-    print(segment_start_end)
+    # print(segment_start_end)
     for num_seg in segment_start_end:
-        print(num_seg)
-        print(list_score_aligned[num_seg[0]: num_seg[1]+1])
+        # print(num_seg)
+        # print(list_score_aligned[num_seg[0]: num_seg[1]+1])
         seg_t = [note_t_s[0] for note_t_s in list_score_aligned[num_seg[0]: num_seg[1]+1] if len(note_t_s[0])]
         seg_s = [note_t_s[1] for note_t_s in list_score_aligned[num_seg[0]: num_seg[1]+1] if len(note_t_s[1])]
         

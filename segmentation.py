@@ -13,14 +13,15 @@ def notes_segmenation(list_note, list_score_aligned, inter_note_threshold=2.0, s
 
     for ii in range(len(list_score_aligned)):
         if not len(list_score_aligned[ii][0]):
-            list_note_segment.append(list_note[ii] + [ii])
+            list_note_segment.append(list_note[ii])
         else:
             ind_student_extra_stop = ii
             break
+            
     if len(list_note_segment):
         list_note_entire.append(list_note_segment)
 
-    list_note_segment = [list_note[ind_student_extra_stop]+[ind_student_extra_stop]]
+    list_note_segment = [list_note[ind_student_extra_stop]]
     first_note_start = list_note[ind_student_extra_stop][0]
 
     for ii in range(ind_student_extra_stop, len(list_note)-1):
@@ -28,10 +29,10 @@ def notes_segmenation(list_note, list_score_aligned, inter_note_threshold=2.0, s
         current_note_start = list_note[ii+1][0]
         if current_note_start - previous_note_end > inter_note_threshold or current_note_start - first_note_start > segment_dur:
             list_note_entire.append(list_note_segment)
-            list_note_segment = [list_note[ii+1]+[ii+1]]
+            list_note_segment = [list_note[ii+1]]
             first_note_start = list_note[ii+1][0]
         else:
-            list_note_segment.append(list_note[ii+1]+[ii+1])
+            list_note_segment.append(list_note[ii+1])
     list_note_entire.append(list_note_segment)
 
     return list_note_entire

@@ -82,27 +82,29 @@ def all_features(list_score_seg, tempo_s):
             beat_div = beat_diviation(list_score_seg[ii][1][0], onset_first_s, tempo_s)
             onset_previous_t = list_score_seg[ii][0][0] 
             onset_previous_s = list_score_seg[ii][1][0]
-        if not len(list_score_seg[ii][0]):
+        elif not len(list_score_seg[ii][0]) and len(list_score_seg[ii][1]):
             extra = True
             missing = False
-            ioi_diff = None
-            pitch_diff = None
-            dur_diff = None
-            beat_div = None
+            ioi_diff = 0
+            pitch_diff = 5
+            dur_diff = 0
+            beat_div = 0
             onset_previous_s = list_score_seg[ii][1][0]
-        if not len(list_score_seg[ii][1]):
+        elif not len(list_score_seg[ii][1]) and len(list_score_seg[ii][0]):
             extra = False
             missing = True
-            ioi_diff = None
-            pitch_diff = None
-            dur_diff = None
-            beat_div = None
+            ioi_diff = 0
+            pitch_diff = 5
+            dur_diff = 0
+            beat_div = 0
             onset_previous_t = list_score_seg[ii][0][0]
+        else:
+            raise NotImplementedError("Impossible case")
         
         if ii == ind_onset_first_t or ii == ind_onset_first_s:
-            ioi_diff = None
+            ioi_diff = 0
         if ii == ind_onset_first_s:
-            beat_div = None
+            beat_div = 0
 
         list_features.append([pitch_diff, beat_div, ioi_diff, dur_diff, missing, extra])
 
@@ -120,7 +122,10 @@ def features_student(wav_t, wav_s, midi_t, annotation_txt_s, plot_align=False):
 
     score_s_segmented = notes_segmenation(score_s, list_score_aligned)
 
+    # print(score_s_segmented)
+
     segment_start_end = indices_segment_start_end(list_score_aligned, score_s_segmented)
+    # print(segment_start_end)
 
     list_score_aligned_seg, _, list_tempo_s = streching_student_notes(list_score_aligned, segment_start_end)
 
@@ -129,9 +134,13 @@ def features_student(wav_t, wav_s, midi_t, annotation_txt_s, plot_align=False):
         list_features_seg = all_features(list_score_aligned_seg[ii], list_tempo_s[ii])
         list_features += list_features_seg
     
+    print(len(list_features), len(list_score_aligned))
     list_features_student = []
     for ii in range(len(list_score_aligned)):
-        if len(list_score_aligned[ii][1]):
+        if list_score_aligned[ii][1]:
+            # if list_features[ii][-2]:
+                # print(list_features[ii])
+                # print(list_score_aligned[ii])
             list_features_student.append(list_features[ii])
     return list_features_student
 

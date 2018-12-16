@@ -4,11 +4,16 @@ import os
 from parser.txt_parser import sv_score_annotation_parser
 from midi2aud import save_midi_2_audio
 from feature_cal import features_student
+import numpy as np
+import pickle
 
 if __name__ == "__main__":
     temp_wav_t = "./temp/temp_wav_t.wav"
     temp_wav_s = "./temp/temp_wav_s.wav"
-    plot_align = True
+    plot_align = False
+
+    list_features_student_all = []
+    list_annotation_all = []
 
     folders = os.listdir(path_annotation)
     for folder in folders:
@@ -33,5 +38,16 @@ if __name__ == "__main__":
                                                              annotation_txt_s=filename_student_annotation,
                                                              plot_align=plot_align)
 
-                    print(len(list_features_student))
-                    print(len(list_annotation))
+                    list_features_student_all += list_features_student
+                    list_annotation_all += list_annotation
+
+                    print(len(list_features_student), len(list_annotation))
+
+    with open("./data/list_features_student.pkl", "wb") as f:
+        pickle.dump(list_features_student_all, f)
+
+    with open("./data/list_annotation.pkl", "wb") as f:
+        pickle.dump(list_annotation_all, f)
+
+
+        

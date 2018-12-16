@@ -19,7 +19,7 @@ def sv_score_annotation_parser(filename):
         list_annotation = []
         for ls in lines_score:
             note = ls.split('\t')
-            annotation = note[4].split(' ')
+            annotation = note[4].strip().split(' ')
             if len(annotation) == 5:
                 note_annotation = annotation[4].replace('\n', '')
             else:

@@ -67,7 +67,7 @@ def alignment(y_t, y_s, sr_t, sr_s, score_t, score_s, merge_dlnco=True, plot=Fal
 
     # use wrapping path to align the notes
     # step1: sort the overlapping note area from high to low
-    # step2: abs(note_t - note_s) <= 2
+    # step2: abs(note_t - note_s) <= 4
     wp_stu = wp_s[:, 1][::-1]
     wp_t = wp_s[:, 0][::-1]
 
@@ -94,7 +94,7 @@ def alignment(y_t, y_s, sr_t, sr_s, score_t, score_s, merge_dlnco=True, plot=Fal
         list_dur_pitch_t = sorted(list_dur_pitch_t, key=itemgetter(0), reverse=True)
         
         for ldp_t in list_dur_pitch_t:
-            if ldp_t[0] > 0 and ldp_t[1] <=2: # find the most overlapped note and pitch diff <= 2
+            if ldp_t[0] > 0 and ldp_t[1] <=4: # find the most overlapped note and pitch diff <= 2
                 list_score_aligned.append([score_t[ldp_t[2]], note_s])
                 # print(len(score_t))
                 score_t.pop(ldp_t[2])
