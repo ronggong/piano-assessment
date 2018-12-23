@@ -8,20 +8,6 @@ from align import alignment
 import pretty_midi
 import copy
 
-# audio_t = ess.MonoLoader(filename="./test/seconds(t).wav")()
-# audio_s = ess.MonoLoader(filename="./test/seconds1(s).wav")()
-# audio_t /= max(audio_t)
-# audio_s /= max(audio_s)
-
-# RHYTHM = ess.RhythmExtractor2013(method="degara")
-
-# bpm_t, ticks_t, _, _, bpmIntervals_t = RHYTHM(audio_t)
-# bpm_s, ticks_s, _, _, bpmIntervals_s = RHYTHM(audio_s)
-
-# f, (ax1, ax2) = plt.subplots(2, 1, sharex=True)
-# ax1.plot(bpmIntervals_t)
-# ax2.plot(bpmIntervals_s)
-# plt.show()
 
 def get_tempo_segment(seg):
     piano_seg = pretty_midi.PrettyMIDI()

@@ -26,3 +26,6 @@ def sv_score_annotation_parser(filename):
                 note_annotation = "00000"
             list_annotation.append(note_annotation)
     return list_annotation
+
+def sv_score_annotation_parser_manual_aligned(filename):
+    return 

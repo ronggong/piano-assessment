@@ -1,3 +1,5 @@
+import matplotlib
+matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt 
 import numpy as np
 import pickle
@@ -61,10 +63,10 @@ if __name__ == "__main__":
     extra_1 = [f[5] for f in features_overall_1]
     extra_2 = [f[5] for f in features_overall_2]
 
-    plot_3_rubric(pitch_diff_0, pitch_diff_1, pitch_diff_2, 50, "pitch_diff_overall")
-    plot_3_rubric(beat_div_0, beat_div_1, beat_div_2, 50, "beat div overall")
-    plot_3_rubric(ioi_diff_0, ioi_diff_1, ioi_diff_2, 50, "ioi diff overall")
-    plot_3_rubric(dur_diff_0, dur_diff_1, dur_diff_2, 50, "dur diff overall")
+    plot_3_rubric(pitch_diff_0, pitch_diff_1, pitch_diff_2, 50, "pitch_diff/overall")
+    plot_3_rubric(beat_div_0, beat_div_1, beat_div_2, 50, "beat div/overall")
+    plot_3_rubric(ioi_diff_0, ioi_diff_1, ioi_diff_2, 50, "ioi diff/overall")
+    plot_3_rubric(dur_diff_0, dur_diff_1, dur_diff_2, 50, "dur diff/overall")
 
     # onset features
     features_onset_0 = [list_features_student[ii] for ii in range(len(onset)) if onset[ii] == 0]
@@ -79,9 +81,9 @@ if __name__ == "__main__":
     dur_diff_0 = [f[3] for f in features_onset_0 if f[3]]
     dur_diff_1 = [f[3] for f in features_onset_1 if f[3]]
 
-    plot_2_rubric(beat_div_0, beat_div_1, 50, "beat div onset")
-    plot_2_rubric(ioi_diff_0, ioi_diff_1, 50, "ioi diff onset")
-    plot_2_rubric(dur_diff_0, dur_diff_1, 50, "dur diff onset")
+    plot_2_rubric(beat_div_0, beat_div_1, 50, "beat div/onset")
+    plot_2_rubric(ioi_diff_0, ioi_diff_1, 50, "ioi diff/onset")
+    plot_2_rubric(dur_diff_0, dur_diff_1, 50, "dur diff/onset")
 
     # duration features
     features_dur_0 = [list_features_student[ii] for ii in range(len(dur)) if dur[ii] == 0]
@@ -96,6 +98,6 @@ if __name__ == "__main__":
     dur_diff_0 = [f[3] for f in features_dur_0 if f[3]]
     dur_diff_1 = [f[3] for f in features_dur_1 if f[3]]
 
-    plot_2_rubric(beat_div_0, beat_div_1, 50, "beat div onset")
-    plot_2_rubric(ioi_diff_0, ioi_diff_1, 50, "ioi diff onset")
-    plot_2_rubric(dur_diff_0, dur_diff_1, 50, "dur diff onset")
+    plot_2_rubric(beat_div_0, beat_div_1, 50, "beat div/onset")
+    plot_2_rubric(ioi_diff_0, ioi_diff_1, 50, "ioi diff/onset")
+    plot_2_rubric(dur_diff_0, dur_diff_1, 50, "dur diff/onset")

@@ -3,8 +3,8 @@ from parser.txt_parser import sv_score_parser
 def notes_segmenation(list_note, list_score_aligned, inter_note_threshold=2.0, segment_dur=10.0):
     """
     Segmentation the student note sequence with two criteria:
-    1. current note start - previous note end > inter note time threshold
-    2. current note start - first note start of the segment > segment duration
+    1. current note start - previous note end > inter note time threshold, default 2.0 s
+    2. current note start - first note start of the segment > segment duration, default 10.0 s
     output: [[segment_0], [segment_1], ...], segment = [[note_0], [note_1], ...], note = [start, midi, dur, note_number]
     """
     ind_student_extra_stop = 0
