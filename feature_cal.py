@@ -12,7 +12,10 @@ def pitch_difference(p_t, p_s):
     p_t: teacher pitch in midi note
     p_s: student pitch in midi note
     """
-    return abs(p_t - p_s)
+    p_d = abs(p_t - p_s)
+    if p_d == 12:
+        p_d = 0
+    return p_d
 
 def duration_difference(d_t, d_s):
     """
@@ -156,10 +159,11 @@ def features_student(wav_t, wav_s, midi_t, annotation_txt_s, plot_align=False):
             list_features_student.append(list_features[ii])
     return list_features_student
 
-# TODO: write a function to get features from manual alignment
-def features_student_manual_alignment(list_score_aligned, annotation_txt_s):
-    
-    score_s = sv_score_parser(annotation_txt_s)
+# get features from manual alignment
+def features_student_manual_alignment(list_score_aligned):
+
+    # student score
+    score_s = [s[1] for s in list_score_aligned]
     
     # segment the student score according the rules
     score_s_segmented = notes_segmenation(score_s, list_score_aligned)

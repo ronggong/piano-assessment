@@ -23,10 +23,12 @@ def plot_3_rubric(feature_list_0, feature_list_1, feature_list_2, bins, feature_
 
 
 if __name__ == "__main__":
-    with open("./data/list_annotation.pkl", "rb") as f:
+    with open("./data/list_annotation_manual_aligned.pkl", "rb") as f:
         list_annotation_all = pickle.load(f)
-    with open("./data/list_features_student.pkl", "rb") as f:
+    with open("./data/list_features_student_manual_aligned.pkl", "rb") as f:
         list_features_student = pickle.load(f)
+
+    bins = 50
 
     overall = np.array([int(list_annotation_all[ii][0]) for ii in range(len(list_annotation_all))])
     onset = np.array([int(list_annotation_all[ii][1]) for ii in range(len(list_annotation_all))])
@@ -42,7 +44,7 @@ if __name__ == "__main__":
     pitch_diff_0 = [f[0] for f in features_overall_0 if f[0]]
     pitch_diff_1 = [f[0] for f in features_overall_1 if f[0]]
     pitch_diff_2 = [f[0] for f in features_overall_2 if f[0]]
-    
+
     beat_div_0 = [f[1] for f in features_overall_0 if f[1]]
     beat_div_1 = [f[1] for f in features_overall_1 if f[1]]
     beat_div_2 = [f[1] for f in features_overall_2 if f[1]]
@@ -63,10 +65,10 @@ if __name__ == "__main__":
     extra_1 = [f[5] for f in features_overall_1]
     extra_2 = [f[5] for f in features_overall_2]
 
-    plot_3_rubric(pitch_diff_0, pitch_diff_1, pitch_diff_2, 50, "pitch_diff/overall")
-    plot_3_rubric(beat_div_0, beat_div_1, beat_div_2, 50, "beat div/overall")
-    plot_3_rubric(ioi_diff_0, ioi_diff_1, ioi_diff_2, 50, "ioi diff/overall")
-    plot_3_rubric(dur_diff_0, dur_diff_1, dur_diff_2, 50, "dur diff/overall")
+    plot_3_rubric(pitch_diff_0, pitch_diff_1, pitch_diff_2, bins, "pitch_diff/overall")
+    plot_3_rubric(beat_div_0, beat_div_1, beat_div_2, bins, "beat div/overall")
+    plot_3_rubric(ioi_diff_0, ioi_diff_1, ioi_diff_2, bins, "ioi diff/overall")
+    plot_3_rubric(dur_diff_0, dur_diff_1, dur_diff_2, bins, "dur diff/overall")
 
     # onset features
     features_onset_0 = [list_features_student[ii] for ii in range(len(onset)) if onset[ii] == 0]
@@ -81,9 +83,9 @@ if __name__ == "__main__":
     dur_diff_0 = [f[3] for f in features_onset_0 if f[3]]
     dur_diff_1 = [f[3] for f in features_onset_1 if f[3]]
 
-    plot_2_rubric(beat_div_0, beat_div_1, 50, "beat div/onset")
-    plot_2_rubric(ioi_diff_0, ioi_diff_1, 50, "ioi diff/onset")
-    plot_2_rubric(dur_diff_0, dur_diff_1, 50, "dur diff/onset")
+    plot_2_rubric(beat_div_0, beat_div_1, bins, "beat div/onset")
+    plot_2_rubric(ioi_diff_0, ioi_diff_1, bins, "ioi diff/onset")
+    plot_2_rubric(dur_diff_0, dur_diff_1, bins, "dur diff/onset")
 
     # duration features
     features_dur_0 = [list_features_student[ii] for ii in range(len(dur)) if dur[ii] == 0]
@@ -98,6 +100,6 @@ if __name__ == "__main__":
     dur_diff_0 = [f[3] for f in features_dur_0 if f[3]]
     dur_diff_1 = [f[3] for f in features_dur_1 if f[3]]
 
-    plot_2_rubric(beat_div_0, beat_div_1, 50, "beat div/onset")
-    plot_2_rubric(ioi_diff_0, ioi_diff_1, 50, "ioi diff/onset")
-    plot_2_rubric(dur_diff_0, dur_diff_1, 50, "dur diff/onset")
+    plot_2_rubric(beat_div_0, beat_div_1, bins, "beat div/dur")
+    plot_2_rubric(ioi_diff_0, ioi_diff_1, bins, "ioi diff/dur")
+    plot_2_rubric(dur_diff_0, dur_diff_1, bins, "dur diff/dur")
