@@ -105,11 +105,13 @@ def streching_student_notes(list_score_aligned, segment_start_end):
             list_score_seg.append(list_score_aligned_copy[ii])
         list_score_aligned_seg.append(list_score_seg)
 
+        # print("before strech {}, {}".format(tempo_t, tempo_s))
         if tempo_s:
             seg_s = [[note_s[0]*tempo_s/tempo_t, note_s[1], note_s[2]*tempo_s/tempo_t] for note_s in seg_s]
             tempo_s = get_tempo_segment(seg_s)
             list_tempo_t.append(tempo_t)
             list_tempo_s.append(tempo_s)
+            # print("after strech {}, {}".format(tempo_t, tempo_s))
         else:
             list_tempo_t.append(None)
             list_tempo_s.append(None)
