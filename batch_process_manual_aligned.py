@@ -9,8 +9,8 @@ import pickle
 
 if __name__ == "__main__":
 
-    list_features_student_all = []
-    list_annotation_all = []
+    list_features_student_all = {}
+    list_annotation_all = {}
 
     folders = os.listdir(path_annotation_aligned)
     for folder in folders:
@@ -24,6 +24,7 @@ if __name__ == "__main__":
 
             for filename in filenames_annotation:
                 if filename.endswith('.txt'): # annotation file name ends with .txt
+                    base_filename = filename.replace('.txt', '')
                     # student annotation
                     filename_student_annotation = os.path.join(path_annotation_aligned, folder, filename)
                     
@@ -33,13 +34,13 @@ if __name__ == "__main__":
                     # extract student performance features
                     list_features_student = features_student_manual_alignment(list_score_aligned)
 
-                    list_features_student_all += list_features_student
-                    list_annotation_all += list_annotation
+                    list_features_student_all[folder+'-'+base_filename] = list_features_student
+                    list_annotation_all[folder+'-'+base_filename] = list_annotation
 
-    with open("./data/list_features_student_manual_aligned.pkl", "wb") as f:
+    with open("./data/list_features_student_manual_aligned_dict.pkl", "wb") as f:
         pickle.dump(list_features_student_all, f)
 
-    with open("./data/list_annotation_manual_aligned.pkl", "wb") as f:
+    with open("./data/list_annotation_manual_aligned_dict.pkl", "wb") as f:
         pickle.dump(list_annotation_all, f)
 
 

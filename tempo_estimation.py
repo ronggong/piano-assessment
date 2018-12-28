@@ -45,7 +45,7 @@ def indices_segment_start_end(list_score_aligned, score_s_segmented):
         # # force the end of the last index of the segment end = the current segment start number - 1
         # force the beginning of the current index of the segment = the index of the last segment end
         if num_t_start > last_end_num + 1 and len(segment_start_end):
-            num_t_start_orig = num_t_start # this index, list_score_aligned list has note
+            num_t_start_orig = num_t_start # this index, list_score_aligned list has student note
             # segment_start_end[-1][1] = num_t_start - 1
             num_t_start = last_end_num + 1
         elif not len(segment_start_end) and num_t_start > 0:
@@ -58,8 +58,11 @@ def indices_segment_start_end(list_score_aligned, score_s_segmented):
         # print(list_score_aligned[num_t_start_orig], list_score_aligned[num_t_end])
         # print(segment_start_end)
         # TODO implement the minimum note restriction for teacher's segment
-        # print(len(list_score_aligned), num_t_start_orig, last_end_num)
-        if len(segment_start_end) and list_score_aligned[num_t_end][1][3] - list_score_aligned[num_t_start_orig][1][3] < 2:
+        
+        # teacher segment length
+        length_teacher_seg = len([list_score_aligned[ii][0] for ii in range(num_t_start_orig, num_t_end+1) if len(list_score_aligned[ii][0])])
+        
+        if len(segment_start_end) and (list_score_aligned[num_t_end][1][3] - list_score_aligned[num_t_start_orig][1][3] < 2 or length_teacher_seg < 2):
             segment_start_end[-1][1] = num_t_end
         else:
             segment_start_end.append([num_t_start, num_t_end])
