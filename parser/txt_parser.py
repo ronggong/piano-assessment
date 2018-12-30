@@ -76,7 +76,6 @@ def sv_score_annotation_parser_manual_aligned(filename):
                 list_score_aligned.append([[], student_data + [sidx]])
     return list_annotation, list_score_aligned
 
-
 def parse_manual_line(line):
     """
     helper function for parsing manual aligned files
