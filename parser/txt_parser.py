@@ -56,3 +56,42 @@ def sv_score_annotation_parser_manual_aligned(filename):
             else:
                 raise ValueError("Not a valid note list length {}".format(len(note)))
     return list_annotation, list_note_aligned
+
+def sv_score_annotation_parser_manual_aligned(filename):
+    """
+    parse manual annotation
+    """
+    list_annotation = []
+    list_score_aligned = []
+    with open(filename, "r") as file_handle:
+        lines = file_handle.readlines()
+        tidx = 0
+        for sidx, line in enumerate(lines):
+            label, teacher_data, student_data = parse_manual_line(line)
+            list_annotation.append(label)
+            if teacher_data:
+                list_score_aligned.append([teacher_data + [tidx], student_data + [sidx]])
+                tidx += 1
+            else:
+                list_score_aligned.append([[], student_data + [sidx]])
+    return list_annotation, list_score_aligned
+
+def parse_manual_line(line):
+    """
+    helper function for parsing manual aligned files
+    """
+    line = line.split('\t')
+    # get the student data
+    student_data = [float(line[0]), int(line[1]), float(line[2])]
+    # get the teacher data
+    if len(line) > 5:
+        teacher_data = [float(line[5]), int(line[6]), float(line[7])]
+    else:
+        teacher_data = []
+    # get the annotation label
+    ant_data = line[4].split()
+    if len(ant_data[-1]) == 5 and set(ant_data[-1]).issubset({'0', '1', '2'}):
+        label = ant_data[-1]
+    else:
+        label = "0" * 5
+    return label, teacher_data, student_data
