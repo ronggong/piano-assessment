@@ -10,6 +10,24 @@ def sv_score_parser(filename):
             list_note.append([float(note[0]), int(note[1]), float(note[2])])
     return list_note
 
+def sv_score_transcribed_parser(filename):
+    """
+    parse transcribed score with annotation into notes
+    """
+    with open(filename, "r") as file_handle:
+        lines_score = file_handle.readlines()
+        list_note = []
+        list_annotation = []
+        for ls in lines_score:
+            note = ls.split('\t')
+            print(note)
+            if len(note) == 3:
+                list_annotation.append("00000")
+            else:
+                list_annotation.append(note[3].replace('\n', ''))
+            list_note.append([float(note[0]), int(note[1]), float(note[2].replace('\n', ''))])
+    return list_note, list_annotation
+
 def sv_score_annotation_parser(filename):
     """
     parse score into note annotation

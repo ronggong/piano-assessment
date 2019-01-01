@@ -3,7 +3,7 @@ import pickle
 from sklearn.model_selection import StratifiedKFold
 from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import precision_score, recall_score, f1_score
+from sklearn.metrics import precision_recall_fscore_support
 
 
 def CV_run(skf, list_features, annotation_no_extra, feature_str=None):
@@ -20,11 +20,9 @@ def CV_run(skf, list_features, annotation_no_extra, feature_str=None):
                                  multi_class='multinomial', class_weight='balanced').fit(X_train, y_train)
         y_pred = clf.predict(X_test)
 
-        p = precision_score(y_test, y_pred, average='weighted')
-        r = recall_score(y_test, y_pred, average='weighted')
-        f1 = f1_score(y_test, y_pred, average='weighted')
+        p, r, _, support = precision_recall_fscore_support(y_test, y_pred, average=None)
 
-        print(feature_str+" CV {} precision {}, recall {}, f1 {}".format(ii, p, r, f1))
+        print(feature_str+" CV {} precision {}, recall {}, support {}".format(ii, p, r, support))
 
 if __name__ == "__main__":
     with open("./data/list_annotation_manual_aligned.pkl", "rb") as f:
